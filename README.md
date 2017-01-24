@@ -83,3 +83,14 @@ An openWhisk docker action written in scala which communicates with IBM cloudant
   `./buildAndPush.sh sanjeevghimire/scalaexample`
   
   `wsk action update --docker scalaexample scala/example`
+  
+# TroubleShooting
+You can use the CLI to see the output logs to troubleshoot your code. Use the following script in a separate terminal to see the outputs.
+
+`wsk activation poll`
+
+# Reference links
+
+* https://console.ng.bluemix.net/docs/openwhisk/openwhisk_actions.html#openwhisk_actions_docker
+* https://developer.ibm.com/openwhisk/
+* https://github.com/openwhisk/openwhisk
