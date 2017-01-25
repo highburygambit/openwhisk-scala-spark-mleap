@@ -30,7 +30,7 @@ An openWhisk docker action written in scala which communicates with IBM cloudant
   `wsk action create --docker scalaexample sanjeevghimire/scalaexample`
 * Invoke the action with necessary parameters:
 
-  `wsk action invoke --blocking --result example --param cmd sendChat --param message ‘How are you?’`
+  `wsk action invoke --blocking --result scalaexample --param cmd sendChat --param message ‘How are you?’`
   
   ```
     {
@@ -42,7 +42,7 @@ An openWhisk docker action written in scala which communicates with IBM cloudant
   ```
 * To get chat that you have sent use the following script:
 
-  `wsk action invoke --blocking --result example --param command getChat`
+  `wsk action invoke --blocking --result scalaexample --param command getChat`
   
   
   ```
@@ -83,3 +83,14 @@ An openWhisk docker action written in scala which communicates with IBM cloudant
   `./buildAndPush.sh sanjeevghimire/scalaexample`
   
   `wsk action update --docker scalaexample scala/example`
+  
+# TroubleShooting
+You can use the CLI to see the output logs to troubleshoot your code. Use the following script in a separate terminal to see the outputs.
+
+`wsk activation poll`
+
+# Reference links
+
+* https://console.ng.bluemix.net/docs/openwhisk/openwhisk_actions.html#openwhisk_actions_docker
+* https://developer.ibm.com/openwhisk/
+* https://github.com/openwhisk/openwhisk
