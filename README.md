@@ -9,7 +9,7 @@ An openWhisk docker action written in scala which communicates with IBM cloudant
 
 # Quick Start
 
-* git clone 
+* git clone https://github.com/sanjeevghimire/openwhisk-scala-cloudant-action.git
 * cd scala-cloudant-action/
 * Make sure you have IBM cloudant setup. Create a database and change credentials `src/main/resources/config.properties` 
     ```    
