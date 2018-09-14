@@ -7,22 +7,15 @@ An openWhisk docker action written in scala which communicates with IBM cloudant
 * java 1.8+
 * scala 2.11.6+ and sbt 0.13
 
-# Quick Start
+# Run The Example
+
+
+
+# Write Your Own Example
 
 * git clone https://github.com/sanjeevghimire/openwhisk-scala-cloudant-action.git
 * cd scala-cloudant-action/
-* Make sure you have IBM cloudant setup. Create a database and change credentials `src/main/resources/config.properties` 
-    ```    
-    username=<username> 
-    password=<password> 
-    host=<bluemix host> 
-    port=443 
-    url=<url> 
-    dbname=<database that you just created> 
-    key=<key provided by the cloudant db server> 
-    passcode=<password>
-    ```
-    
+
 * `sbt clean assembly`
 * `cd ../` and Run `./buildAndPush.sh sanjeevghimire/scalaexample`
 * Create the scala action using following script.
@@ -84,13 +77,3 @@ An openWhisk docker action written in scala which communicates with IBM cloudant
   
   `wsk action update --docker scalaexample scala/example`
   
-# TroubleShooting
-You can use the CLI to see the output logs to troubleshoot your code. Use the following script in a separate terminal to see the outputs.
-
-`wsk activation poll`
-
-# Reference links
-
-* https://console.ng.bluemix.net/docs/openwhisk/openwhisk_actions.html#openwhisk_actions_docker
-* https://developer.ibm.com/openwhisk/
-* https://github.com/openwhisk/openwhisk
