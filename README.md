@@ -1,4 +1,4 @@
-# openwhisk-scala-cloudant-action
+# openwhisk-scala-spark-mleap
 An openWhisk docker action written in scala which communicates with IBM cloudant database. It's using a docker container to spin off a scala container which downloads the action builds and invokes the function.
 
 # Pre-requisites
