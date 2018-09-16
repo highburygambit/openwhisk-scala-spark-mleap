@@ -2,7 +2,7 @@
 An openWhisk docker action written in scala which communicates with IBM cloudant database. It's using a docker container to spin off a scala container which downloads the action builds and invokes the function.
 
 # Pre-requisites
-* openWhisk - https://github.com/openwhisk/openwhisk
+* [Apache openWhisk](https://github.com/openwhisk/openwhisk)
 * openwhisk CLI
 * java 1.8+
 * scala 2.11.6+ and sbt 0.13
