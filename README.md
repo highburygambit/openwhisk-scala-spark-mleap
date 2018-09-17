@@ -5,7 +5,7 @@ An openWhisk docker action written in scala which communicates with IBM cloudant
 * [Apache openWhisk](https://github.com/openwhisk/openwhisk)
 * openwhisk CLI
 * java 1.8+
-* scala 2.11.6+ and sbt 0.13
+* scala 2.11.6+ and sbt 0.13+
 
 # Run The Example
 
