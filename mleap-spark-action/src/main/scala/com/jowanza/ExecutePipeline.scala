@@ -22,6 +22,6 @@ object ExecutePipeline extends App {
   val mleapPipeline = bundle.root
 
   print(mleapPipeline.transform(g).get.dataset.last.last)
-  
+
 
 }

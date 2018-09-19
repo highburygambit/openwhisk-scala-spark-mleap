@@ -8,7 +8,7 @@ ENV FLASK_PROXY_PORT 8080
 ADD ./mleap-spark-action/whisk-action/exec /action/exec
 ADD ./mleap-spark-action /action/mleap-spark-action
 
-ADD /mleap-spark-action/target/scala-2.11/chat.jar /action/jars/chat.jar
+ADD /mleap-spark-action/target/scala-2.11/mleap.jar /action/jars/mleap.jar
 
 RUN chmod +x /action/exec
 
@@ -100,7 +100,7 @@ RUN set -ex && \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
 
 
-# scala environmen
+# scala environment. Much easier than Java :). 
 ENV SCALA_VERSION=2.11.7 \
 	SCALA_HOME=/opt/scala
 
@@ -129,6 +129,6 @@ RUN apk add --no-cache --virtual=build-dependencies curl && \
 
 #RUN cd /action/mleap-spark-action && sbt clean assembly
 
-# ENV CLASSPATH $CLASSPATH:/action/mleap-spark-action/target/scala-2.11/chat.jar
-ENV CLASSPATH $CLASSPATH:/action/jars/chat.jar
+# ENV CLASSPATH $CLASSPATH:/action/mleap-spark-action/target/scala-2.11/mleap.jar
+ENV CLASSPATH $CLASSPATH:/action/jars/mleap.jar
 CMD ["/bin/bash", "-c", "cd actionProxy && python -u actionproxy.py"]
