@@ -13,8 +13,8 @@ object Workable {
     }
 
 
-  def getData(): String = {
-    getObjectMapper().writeValueAsString(Jowanza("jowanza"))
+  def getData(arg: String): String = {
+    getObjectMapper().writeValueAsString(Jowanza(arg))
   }
 
 }

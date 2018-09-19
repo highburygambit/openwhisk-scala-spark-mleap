@@ -8,8 +8,6 @@ assemblyJarName := "chat.jar"
 
 resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
 
-libraryDependencies += "com.cloudant" % "cloudant-client" % "2.6.2"
-
 libraryDependencies += "com.fasterxml.jackson.module" % "jackson-module-scala_2.11" % "2.6.1"
 
 libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.1.2"
