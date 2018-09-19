@@ -1,5 +1,4 @@
-import com.jowanza.Workable
-import scala.collection.immutable.Map
+import com.jowanza.ExecutePipeline
 
 
 object ChatMain {
@@ -10,9 +9,9 @@ object ChatMain {
 
     val inputMap:Map[String , String] = jsonString.substring(1, jsonString.length - 1).split(",").map(_.split(":")).map { case Array(k, v) => (k.trim.replaceAll("\"",""),v.trim.replaceAll("\"",""))}.toMap
 
-    val command: String = inputMap.get("command").get
+    val command: String = inputMap.get("data").get
 
-    println(Workable.getData(command))
+    print(ExecutePipeline.predictModel(command))
   }
 }
 
