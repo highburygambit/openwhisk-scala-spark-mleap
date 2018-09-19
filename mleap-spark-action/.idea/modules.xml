@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mleap-spark-action.iml" filepath="$PROJECT_DIR$/.idea/modules/mleap-spark-action.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mleap-spark-action-build.iml" filepath="$PROJECT_DIR$/.idea/modules/mleap-spark-action-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openwhisk_ibm_cloudant.iml" filepath="$PROJECT_DIR$/.idea/modules/openwhisk_ibm_cloudant.iml" />
     </modules>
   </component>
 </project>
