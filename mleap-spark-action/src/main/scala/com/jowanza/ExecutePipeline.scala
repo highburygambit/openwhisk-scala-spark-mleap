@@ -24,7 +24,7 @@ object ExecutePipeline {
 
 
   def predictModel(values: String): String ={
-    val bundle = (for(bundleFile <- managed(BundleFile("jar:file:/action/mleap-spark-action/airbnb.model.lr.zip"))) yield {
+    val bundle = (for(bundleFile <- managed(BundleFile("jar:file:///action/mleap-spark-action/airbnb.model.lr.zip"))) yield {
       bundleFile.loadMleapBundle().get
     }).opt.get
 
