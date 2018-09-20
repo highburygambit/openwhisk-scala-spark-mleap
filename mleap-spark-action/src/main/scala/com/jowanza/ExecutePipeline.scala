@@ -12,9 +12,6 @@ object ExecutePipeline {
   // load the Spark pipeline we saved in the previous section
 
 
-//  val s = scala.io.Source.fromURL("file:///Users/jowanzajoseph/Downloads/frame.airbnb.json").mkString
-//  val bytes = s.getBytes("UTF-8")
-
   implicit def getObjectMapper(): ObjectMapper = {
     val objectMapper = new ObjectMapper()
     objectMapper.registerModule(DefaultScalaModule)
@@ -37,7 +34,12 @@ object ExecutePipeline {
     getObjectMapper().writeValueAsString(Prediction(predict.asInstanceOf[Double]))
   }
 
+  def convertJSONString(value: String): String = {
 
+    val d= getObjectMapper().readValue(value,  classOf[Map[String, Map[String, String]]])
+
+    getObjectMapper().writeValueAsString(d.get("data").get)
+  }
 
 }
 
