@@ -18,6 +18,7 @@ object ExecutePipeline {
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
   }
 
+  // ///action/mleap-spark-action/airbnb.model.lr.zip"
 
 
   def predictModel(values: String): String ={
@@ -36,7 +37,7 @@ object ExecutePipeline {
 
   def convertJSONString(value: String): String = {
 
-    val d= getObjectMapper().readValue(value,  classOf[Map[String, Map[String, String]]])
+    val d= getObjectMapper().readValue(value,  classOf[Map[String, String]])
 
     getObjectMapper().writeValueAsString(d.get("data").get)
   }
