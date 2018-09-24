@@ -11,7 +11,9 @@ object ChatMain {
 
 //    val json: String = ExecutePipeline.convertJSONString(jsonString)
 
-    print(ExecutePipeline.predictModel(jsonString.parseJson.asJsObject.getFields("data").last.toString()))
+    val g: JsValue  = jsonString.parseJson.asJsObject.getFields("data").last
+
+    print(ExecutePipeline.predictModel(g))
   }
 }
 
