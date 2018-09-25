@@ -49,9 +49,9 @@ object ExecutePipeline {
 
 //    val x = Row.apply(List("NY", 2.0, 1250.0, 3.0, 50.0, 30.0, 2.0, 56.0, 90.0, "Entire home/apt", "1.0", "strict", "1.0"))
 
-    val x = Seq("NY", 2.0, 1250.0, 3.0, 50.0, 30.0, 2.0, 56.0, 90.0, "Entire home/apt", "1.0", "strict", "1.0").asInstanceOf[ArrayRow]
 
 
+    val x = ArrayRow.apply(Seq("NY", 2.0, 1250.0, 3.0, 50.0, 30.0, 2.0, 56.0, 90.0, "Entire home/apt", "1.0", "strict", "1.0"))
     val data = DefaultLeapFrame(schema, Seq(x))
 
 
