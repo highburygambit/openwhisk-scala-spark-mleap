@@ -1,12 +1,13 @@
 package com.jowanza
-
+import ml.combust.mleap.runtime.frame.{DefaultLeapFrame, Row}
 import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
+import ml.combust.mleap.runtime.frame.ArrayRow
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import ml.combust.bundle.BundleFile
 import ml.combust.mleap.runtime.MleapSupport._
-import ml.combust.mleap.runtime.serialization.FrameReader
 import resource._
 import spray.json.JsValue
+import ml.combust.mleap.core.types._
 
 object ExecutePipeline {
 
@@ -24,13 +25,44 @@ object ExecutePipeline {
       bundleFile.loadMleapBundle().get
     }).opt.get
 
-    val data = values.toString().getBytes("UTF-8")
-    val g = FrameReader("ml.combust.mleap.json").fromBytes(data).get
+//    val data = values.toString().getBytes("UTF-8")
+//    val g = FrameReader("ml.combust.mleap.json").fromBytes(data).get
+
+    val schema = StructType(StructField("state", ScalarType.String),
+      StructField("bathrooms", ScalarType.Double),
+      StructField("square_feet", ScalarType.Double),
+      StructField("bedrooms", ScalarType.Double),
+      StructField("security_deposit", ScalarType.Double),
+      StructField("cleaning_fee", ScalarType.Double),
+      StructField("extra_people", ScalarType.Double),
+      StructField("number_of_reviews", ScalarType.Double),
+      StructField("review_scores_rating", ScalarType.Double),
+      StructField("room_type", ScalarType.String),
+      StructField("host_is_superhost", ScalarType.String),
+      StructField("cancellation_policy", ScalarType.String),
+      StructField("instant_bookable", ScalarType.String)).get
 
     val mleapPipeline = bundle.root
-    val predict = mleapPipeline.transform(g).get.dataset.last.last
+//    val predict = mleapPipeline.transform(g).get.dataset.last.last
 
-    getObjectMapper().writeValueAsString(Prediction(predict.asInstanceOf[Double]))
+
+
+//    val x = Row.apply(List("NY", 2.0, 1250.0, 3.0, 50.0, 30.0, 2.0, 56.0, 90.0, "Entire home/apt", "1.0", "strict", "1.0"))
+
+    val x = Seq("NY", 2.0, 1250.0, 3.0, 50.0, 30.0, 2.0, 56.0, 90.0, "Entire home/apt", "1.0", "strict", "1.0").asInstanceOf[ArrayRow]
+
+
+    val data = DefaultLeapFrame(schema, Seq(x))
+
+
+
+    print(mleapPipeline.transform(data).get.dataset.last.last)
+
+    "Jowanza"
+
+
+
+//    getObjectMapper().writeValueAsString(Prediction(predict.asInstanceOf[Double]))
   }
 
   def convertJSONString(value: String): String = {
