@@ -20,8 +20,8 @@ object ExecutePipeline {
   // jar:file:///action/mleap-spark-action/airbnb.model.lr.zip
 
   // Todo Do the MLEAP Conversion Manually https://github.com/combust/mleap/blob/master/mleap-runtime/src/main/scala/ml/combust/mleap/json/JsonSupport.scala
-  def predictModel(values: JsValue): String ={
-    val bundle = (for(bundleFile <- managed(BundleFile("jar:file:///Users/jowanzajoseph/Downloads/airbnb.model.lr.zip"))) yield {
+  def predictModel(values: Seq[Any]): String ={
+    val bundle = (for(bundleFile <- managed(BundleFile("jar:file:///action/mleap-spark-action/airbnb.model.lr.zip"))) yield {
       bundleFile.loadMleapBundle().get
     }).opt.get
 
@@ -43,34 +43,16 @@ object ExecutePipeline {
       StructField("instant_bookable", ScalarType.String)).get
 
     val mleapPipeline = bundle.root
-//    val predict = mleapPipeline.transform(g).get.dataset.last.last
-
-
-
-//    val x = Row.apply(List("NY", 2.0, 1250.0, 3.0, 50.0, 30.0, 2.0, 56.0, 90.0, "Entire home/apt", "1.0", "strict", "1.0"))
-
-
 
     val x = ArrayRow.apply(Seq("NY", 2.0, 1250.0, 3.0, 50.0, 30.0, 2.0, 56.0, 90.0, "Entire home/apt", "1.0", "strict", "1.0"))
     val data = DefaultLeapFrame(schema, Seq(x))
 
+    val predict = mleapPipeline.transform(data).get.dataset.last.last
 
 
-    print(mleapPipeline.transform(data).get.dataset.last.last)
-
-    "Jowanza"
-
-
-
-//    getObjectMapper().writeValueAsString(Prediction(predict.asInstanceOf[Double]))
+    getObjectMapper().writeValueAsString(Prediction(predict.asInstanceOf[Double]))
   }
 
-  def convertJSONString(value: String): String = {
-
-    val d= getObjectMapper().readValue(value,  classOf[Map[String, String]])
-
-    getObjectMapper().writeValueAsString(d.get("data").get)
-  }
 
 }
 

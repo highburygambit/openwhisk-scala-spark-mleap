@@ -1,19 +1,18 @@
 import com.jowanza.ExecutePipeline
 import spray.json._
-import DefaultJsonProtocol._
+import spray.json.DefaultJsonProtocol._
 
 object ChatMain {
 
-
   def main(args: Array[String]): Unit = {
 
-    val jsonString: String = args(0)
+    val jsonString = args(0).parseJson.asJsObject.getFields("data").
 
-//    val json: String = ExecutePipeline.convertJSONString(jsonString)
+    println(jsonString)
+    println(Seq("NY", 2.0, 1250.0, 3.0, 50.0, 30.0, 2.0, 56.0, 90.0, "Entire home/apt", "1.0", "strict", "1.0"))
 
-    val g: JsValue  = jsonString.parseJson.asJsObject.getFields("data").last
-
-    print(ExecutePipeline.predictModel(g))
+//    print(jsonString)
+//    print(ExecutePipeline.predictModel(jsonString))
   }
 }
 
