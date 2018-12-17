@@ -6,13 +6,21 @@ object ChatMain {
 
   def main(args: Array[String]): Unit = {
 
-    val jsonString = args(0).parseJson.asJsObject.getFields("data").
+    val jsonString = args(0).parseJson.asJsObject.getFields("data").seq.head.asInstanceOf[JsArray]
 
-    println(jsonString)
-    println(Seq("NY", 2.0, 1250.0, 3.0, 50.0, 30.0, 2.0, 56.0, 90.0, "Entire home/apt", "1.0", "strict", "1.0"))
+    val convertedSeq = convertSeq(jsonString.elements)
 
-//    print(jsonString)
-//    print(ExecutePipeline.predictModel(jsonString))
+    print(ExecutePipeline.predictModel(convertedSeq))
+  }
+
+  def convertSeq(data: Vector[JsValue]): Seq[Any] = {
+    val g = Seq(data.head.convertTo[String],
+      data(1).convertTo[Double],data(2).convertTo[Double],
+      data(3).convertTo[Double],data(4).convertTo[Double],data(5).convertTo[Double]
+      ,data(6).convertTo[Double],data(7).convertTo[Double],
+      data(8).convertTo[Double],data(9).convertTo[String],data(10).convertTo[String],
+      data(11).convertTo[String],data(12).convertTo[String])
+    g
   }
 }
 

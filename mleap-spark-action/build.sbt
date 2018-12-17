@@ -18,6 +18,7 @@ libraryDependencies += "ml.combust.mleap" %% "mleap-runtime" % "0.10.0"
 
 libraryDependencies += "io.spray" %%  "spray-json" % "1.3.4"
 
+
 assemblyMergeStrategy in assembly :={
   case PathList("org", "apache", "spark", "unused", "UnusedStubClass.class")  => MergeStrategy.first
   case x =>

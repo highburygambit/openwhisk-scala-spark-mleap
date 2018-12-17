@@ -19,7 +19,6 @@ object ExecutePipeline {
 
   // jar:file:///action/mleap-spark-action/airbnb.model.lr.zip
 
-  // Todo Do the MLEAP Conversion Manually https://github.com/combust/mleap/blob/master/mleap-runtime/src/main/scala/ml/combust/mleap/json/JsonSupport.scala
   def predictModel(values: Seq[Any]): String ={
     val bundle = (for(bundleFile <- managed(BundleFile("jar:file:///action/mleap-spark-action/airbnb.model.lr.zip"))) yield {
       bundleFile.loadMleapBundle().get
@@ -44,7 +43,8 @@ object ExecutePipeline {
 
     val mleapPipeline = bundle.root
 
-    val x = ArrayRow.apply(Seq("NY", 2.0, 1250.0, 3.0, 50.0, 30.0, 2.0, 56.0, 90.0, "Entire home/apt", "1.0", "strict", "1.0"))
+//    val x = ArrayRow.apply(Seq("NY", 2.0, 1250.0, 3.0, 50.0, 30.0, 2.0, 56.0, 90.0, "Entire home/apt", "1.0", "strict", "1.0"))
+    val x = ArrayRow.apply(values)
     val data = DefaultLeapFrame(schema, Seq(x))
 
     val predict = mleapPipeline.transform(data).get.dataset.last.last
