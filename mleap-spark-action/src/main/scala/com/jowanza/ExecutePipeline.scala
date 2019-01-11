@@ -17,15 +17,11 @@ object ExecutePipeline {
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
   }
 
-  // jar:file:///action/mleap-spark-action/airbnb.model.lr.zip
-
   def predictModel(values: Seq[Any]): String ={
     val bundle = (for(bundleFile <- managed(BundleFile("jar:file:///action/mleap-spark-action/airbnb.model.lr.zip"))) yield {
       bundleFile.loadMleapBundle().get
     }).opt.get
 
-//    val data = values.toString().getBytes("UTF-8")
-//    val g = FrameReader("ml.combust.mleap.json").fromBytes(data).get
 
     val schema = StructType(StructField("state", ScalarType.String),
       StructField("bathrooms", ScalarType.Double),
@@ -42,8 +38,6 @@ object ExecutePipeline {
       StructField("instant_bookable", ScalarType.String)).get
 
     val mleapPipeline = bundle.root
-
-//    val x = ArrayRow.apply(Seq("NY", 2.0, 1250.0, 3.0, 50.0, 30.0, 2.0, 56.0, 90.0, "Entire home/apt", "1.0", "strict", "1.0"))
     val x = ArrayRow.apply(values)
     val data = DefaultLeapFrame(schema, Seq(x))
 

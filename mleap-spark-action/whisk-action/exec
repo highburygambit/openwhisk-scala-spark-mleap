@@ -8,6 +8,8 @@ object ChatMain {
 
   def main(args: Array[String]): Unit = {
 
+    println(args(0))
+
     val jsonString = args(0).parseJson.asJsObject.getFields("data").seq.head.asInstanceOf[JsArray]
 
     val convertedSeq = convertSeq(jsonString.elements)
