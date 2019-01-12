@@ -1,29 +1,28 @@
 package com.jowanza
-import ml.combust.mleap.runtime.frame.{DefaultLeapFrame, Row}
-import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
+
+import ml.combust.mleap.runtime.frame.DefaultLeapFrame
 import ml.combust.mleap.runtime.frame.ArrayRow
-import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import ml.combust.bundle.BundleFile
 import ml.combust.mleap.runtime.MleapSupport._
 import resource._
-import spray.json.JsValue
+import spray.json._
 import ml.combust.mleap.core.types._
 
+
 object ExecutePipeline {
-
-  implicit def getObjectMapper(): ObjectMapper = {
-    val objectMapper = new ObjectMapper()
-    objectMapper.registerModule(DefaultScalaModule)
-    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-  }
-
-  def predictModel(values: Seq[Any]): String ={
-    val bundle = (for(bundleFile <- managed(BundleFile("jar:file:///action/mleap-spark-action/airbnb.model.lr.zip"))) yield {
+  /**
+    * Process the JSON Array of Airbnb Values
+    * @param values<Seq<Any>>
+    * @return
+    */
+  def predictModel(values: Seq[Any]): String = {
+    // Grab mleap bundle from the file system
+    val bundle = (for (bundleFile <- managed(BundleFile("jar:file:///action/mleap-spark-action/airbnb.model.lr.zip"))) yield {
       bundleFile.loadMleapBundle().get
     }).opt.get
 
 
-    val schema = StructType(StructField("state", ScalarType.String),
+    val schema: StructType = StructType(StructField("state", ScalarType.String),
       StructField("bathrooms", ScalarType.Double),
       StructField("square_feet", ScalarType.Double),
       StructField("bedrooms", ScalarType.Double),
@@ -37,17 +36,21 @@ object ExecutePipeline {
       StructField("cancellation_policy", ScalarType.String),
       StructField("instant_bookable", ScalarType.String)).get
 
-    val mleapPipeline = bundle.root
-    val x = ArrayRow.apply(values)
-    val data = DefaultLeapFrame(schema, Seq(x))
+    val pipeLine = bundle.root
+    val rowValues = ArrayRow.apply(values)
+    val data = DefaultLeapFrame(schema, Seq(rowValues))
 
-    val predict = mleapPipeline.transform(data).get.dataset.last.last
+    val predict = pipeLine.transform(data).get.dataset.last.last
 
-
-    getObjectMapper().writeValueAsString(Prediction(predict.asInstanceOf[Double]))
+    object MyJsonProtocol extends DefaultJsonProtocol {
+      implicit val predictionFormat = jsonFormat1(Prediction)
+    }
+    import MyJsonProtocol._
+    // Return a JSON String of the Predicted Value
+    Prediction(predict.asInstanceOf[Double]).toJson.toString()
   }
-
-
 }
+
+
 
 case class Prediction(price: Double)

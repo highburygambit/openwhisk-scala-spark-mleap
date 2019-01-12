@@ -13,6 +13,11 @@ object ChatMain {
     print(ExecutePipeline.predictModel(convertedSeq))
   }
 
+  /**
+    * Explicit conversion of Any to Types
+    * @param data<Vector<JsValue>>
+    * @return
+    */
   def convertSeq(data: Vector[JsValue]): Seq[Any] = {
     val g = Seq(data.head.convertTo[String],
       data(1).convertTo[Double],data(2).convertTo[Double],

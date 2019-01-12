@@ -10,8 +10,6 @@ resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/release
 
 libraryDependencies += "com.fasterxml.jackson.module" % "jackson-module-scala_2.11" % "2.6.1"
 
-libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.1.2"
-
 libraryDependencies += "ml.combust.mleap" %% "mleap-spark" % "0.10.0"
 
 libraryDependencies += "ml.combust.mleap" %% "mleap-runtime" % "0.10.0"
