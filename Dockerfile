@@ -1,7 +1,10 @@
-# Dockerfile for example whisk docker action
+# Dockerfile for MLeap Docker Action
 FROM openwhisk/dockerskeleton 
 
+# Set Port for Flask Server
+
 ENV FLASK_PROXY_PORT 8080
+
 # Install Java 8
 RUN apk add openjdk8
 
@@ -13,7 +16,7 @@ ADD /mleap-spark-action/target/scala-2.11/mleap.jar /action/jars/mleap.jar
 
 RUN chmod +x /action/exec
 
-# scala environment. Much easier than Java :). 
+# Create the Scala Environment Installing Scala 2.11.7
 ENV SCALA_VERSION=2.11.7 \
 	SCALA_HOME=/opt/scala
 
@@ -29,6 +32,8 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     apk del .build-dependencies && \
     rm -rf "/tmp/"*
 
+# Put Jars on Classpath
 ENV CLASSPATH $CLASSPATH:/action/mleap-spark-action/target/scala-2.11/mleap.jar
 ENV CLASSPATH $CLASSPATH:/action/jars/mleap.jar
+# Entry Paths
 CMD ["/bin/bash", "-c", "cd actionProxy && python -u actionproxy.py"]
