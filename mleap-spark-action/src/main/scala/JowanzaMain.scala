@@ -2,7 +2,7 @@ import com.jowanza.ExecutePipeline
 import spray.json._
 import spray.json.DefaultJsonProtocol._
 
-object ChatMain {
+object JowanzaMain {
 
   def main(args: Array[String]): Unit = {
 

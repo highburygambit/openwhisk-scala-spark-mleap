@@ -37,14 +37,15 @@ object ExecutePipeline {
       StructField("instant_bookable", ScalarType.String)).get
 
     val pipeLine = bundle.root
-    val rowValues = ArrayRow.apply(values)
-    val data = DefaultLeapFrame(schema, Seq(rowValues))
+    val rowValues: ArrayRow = ArrayRow.apply(values)
+    val data: DefaultLeapFrame = DefaultLeapFrame(schema, Seq(rowValues))
 
-    val predict = pipeLine.transform(data).get.dataset.last.last
+    val predict: Any = pipeLine.transform(data).get.dataset.last.last
 
     object MyJsonProtocol extends DefaultJsonProtocol {
       implicit val predictionFormat = jsonFormat1(Prediction)
     }
+
     import MyJsonProtocol._
     // Return a JSON String of the Predicted Value
     Prediction(predict.asInstanceOf[Double]).toJson.toString()
